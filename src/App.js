@@ -1,76 +1,149 @@
-import React from "react";
+import React, {Component} from "react";
 import './App.css';
+import { render } from "@testing-library/react";
 
-const Display = ()=>{
-  return(
-    <div>
-      <input className="displayCalcu" type="text"></input>
-    </div>
-  );
-}
+class App extends Component{
+  constructor(props){
+    super(props);
 
-const Botao = (props)=>{
-  return(
-    <button className="valor">
-      {props.valor}
-    </button>
-  );
-}
+    this.state = {
+      valor: 0,
+      operacao: '',
+      aux: null,
+    }
 
-const BotaoOperador = (props)=>{
-  return(
-    <button className="operador">
-      {props.operador}
-    </button>
-  );
-}
+    this.display = this.display.bind(this);
+    this.calcula = this.calcula.bind(this);
+  }
 
 
-const Grade = ()=>{
-  return(
-    <div>
-      <table>
-        <tr>
-          <td colspan="4"><Display/></td>
-        </tr>
-        <tr>
-          <td colspan="3"><Botao valor="AC"/></td>
-          <td><BotaoOperador operador="/"/></td>
-        </tr>
-        <tr>
-          <td><Botao valor="7"/></td>
-          <td><Botao valor="8"/></td>
-          <td><Botao valor="9"/></td>
-          <td><BotaoOperador operador="*"/></td>
-        </tr>
-        <tr>
-          <td><Botao valor="4"/></td>
-          <td><Botao valor="5"/></td>
-          <td><Botao valor="6"/></td>
-          <td><BotaoOperador operador="-"/></td>
-        </tr>
-        <tr>
-          <td><Botao valor="1"/></td>
-          <td><Botao valor="2"/></td>
-          <td><Botao valor="3"/></td>
-          <td><BotaoOperador operador="+"/></td>
-        </tr>
-        <tr>
-          <td colspan="2"><Botao valor="0"/></td>
-          <td><Botao valor="."/></td>
-          <td><BotaoOperador operador="="/></td>
-        </tr>
-      </table>
-    </div>
-  );
-}
+  display(){
 
-function App() {
-  return (
-    <div className="container">
-      <Grade/>
-    </div>
-  );
+    
+    if(this.state.operacao){
+      this.state.aux = this.state.valor
+      this.state.valor = 0
+      this.state.operacao = ''
+      console.log(this.state.aux)
+    }
+
+    if(this.state.operacao == '+'){
+      this.state.valor = this.state.valor + this.state.aux
+      
+    }
+
+    /*
+    if(this.state.operacao === '+'){
+      
+      if(this.state.aux === null){
+        this.state.aux = this.state.valor
+        this.state.valor = 0
+        resposta = this.state.aux
+      }else{
+        this.state.aux = parseInt(this.state.valor) + parseInt(this.state.aux)
+        this.state.valor = 0
+
+        resposta = this.state.aux
+      }
+      
+      //this.state.operacao = ''
+    }*/
+    
+    
+    //console.log('Valor da soma: ' + parseInt(this.state.aux))
+
+    return(
+      <div className="displayCalcu">
+        { parseInt(this.state.valor) }
+      </div>
+    );
+    
+  }
+  
+
+  calcula(){
+    
+    /*console.log( parseFloat('2.5') / parseFloat('2.3'))
+    let valor = this.state.valor
+    let vetorValor = valor.split(/[/+-]/);
+    let vetorOperador = valor.split(/[0123456789]/);
+
+    for(let i = 0; i < vetorValor.length; i++){
+      console.log(vetorValor[i])
+    }
+
+    for(let i = 0; i < vetorOperador.length; i++){
+      console.log(vetorOperador[i])
+    }
+
+    console.log(vetorValor)
+
+    if( parseFloat(this.state.valor[0]) <= 9){
+      console.log("Você digitou um valor numérico");
+      this.setState({
+        resposta: this.state.valor
+      })
+    }else if(this.state.valor[0] === ""){
+      console.log("Você não digitou nenhum valor");
+    }else if(this.state.valor[0] === "*" || this.state.valor[0] === "/" || this.state.valor[0] === "+" || this.state.valor[0] === "-"){
+      console.log("Você digitou um operador");
+    }
+    */
+  }
+
+
+
+ 
+  calculadora(){
+    return(
+      <div>
+        <table className="container">
+          <tbody>
+            <tr>
+              <td colSpan="4">{this.display()}</td>
+            </tr>
+            <tr>
+              <td colSpan="3"><button className="valor" onClick={(e) => this.setState({valor: 0})}>AC</button></td>
+              <td><button className="operador" onClick={(e) => this.setState({valor: this.state.valor + '/'})}>/</button></td>
+            </tr>
+            <tr>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "7"})}>7</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "8"})}>8</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "9"})}>9</button></td>
+              <td><button className="operador" onClick={(e) => this.setState({valor: this.state.valor + '*'})}>*</button></td>
+            </tr>
+            <tr>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "4"})}>4</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "5"})}>5</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "6"})}>6</button></td>
+              <td><button className="operador" onClick={(e) => this.setState({operacao: "-"})}>-</button></td>
+            </tr>
+            <tr>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "1"})}>1</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "2"})}>2</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "3"})}>3</button></td>
+              <td><button className="operador" onClick={(e) => this.setState({operacao : '+' })}>+</button></td>
+            </tr>
+            <tr>
+              <td colSpan="2"><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "0"})}>0</button></td>
+              <td><button className="valor" onClick={(e) => this.setState({valor: this.state.valor + "."})}>.</button></td>
+              <td><button className="operador" onClick={this.calcula}>=</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+
+  render(){
+    return(
+      <div>
+        {this.calculadora()}
+      </div>
+    )
+  }
+
 }
 
 export default App;

@@ -6,7 +6,8 @@
 }
 
 .displayCalcu{
-  width: 95%;
+  width: 12rem;
+  height: 1rem;
   padding: 5px 5px 20px 0px;
   background-color: rgb(82, 82, 82);
   text-align: right;
